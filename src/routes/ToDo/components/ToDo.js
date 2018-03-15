@@ -1,21 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import Note from './Note';
-import EditNote from "./EditNote";
+import EditNote from './EditNote';
 import axios from 'axios';
 import firstNote from './firstNote';
 
 export default class ToDo extends Component {
-  constructor(props) {
-    super (props);
+  constructor (props) {
+    super(props);
     this.state = {array: [], words: [], through: []};
-    this.addNote = this.addNote.bind (this);
-    this.deleteNote = this.deleteNote.bind (this);
-    this.editNote = this.editNote.bind (this);
-    this.save = this.save.bind (this);
-   }
+    this.addNote = this.addNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.save = this.save.bind(this);
+  }
 
-
-  componentWillMount() {
+  componentWillMount () {
     axios.get('/todo')
       .then((response) => {
         console.log(response.data.text);
@@ -24,45 +23,44 @@ export default class ToDo extends Component {
         let textArr = response.data.text;
         let throughArr = response.data.isThrough;
 
-        for (let i = 0; i < textArr.length; i++) {
-
-          let elementNode = <Note
-            delete={this.deleteNote}
-            edit={this.editNote}
-            value={textArr[i]}
-            checkFlag={throughArr[i]}
-          />;
+        // for (let i = 0; i < textArr.length; i++) {
+        //
+        //   let elementNode = <Note
+        //     delete={this.deleteNote}
+        //     edit={this.editNote}
+        //     value={textArr[i]}
+        //     checkFlag={throughArr[i]}
+        //   />;
           let wordOfArray = this.state.words;
           let flag = this.state.through;
-          this.setState({array: [...this.state.array, elementNode]});
-          wordOfArray.push(textArr[i]);
-          flag.push(throughArr[i]);
-        }
+          //this.setState({array: [...this.state.array, elementNode]});
+          wordOfArray.push(textArr);
+          flag.push(throughArr);
+        // }
       })
   }
- handleCheckboxClick(flag) {
-    let isChecked = flag;
+ // handleCheckboxClick(flag) {
+ //    let isChecked = flag;
+ //
+ //    let stateArray = this.state.array;
+ //    stateArray[flag].isChecked = true;
+ //    this.setState(...this.state.array,)
+ // }
 
-    let stateArray = this.state.array;
-    stateArray[flag].isChecked = true;
-    this.setState(...this.state.array,)
- }
-
-  addNote() {
-
+  addNote () {
     let elementNode = <Note
       delete={this.deleteNote}
       edit={this.editNote}
-      value={document.getElementById ("listItem").value}
+      value={document.getElementById('listItem').value}
       through={this.state.through}
     />;
 
     let wordOfArray = this.state.words;
     let flag = this.state.through;
-    this.setState ({array: [...this.state.array, elementNode]});
-    wordOfArray.push (document.getElementById ("listItem").value);
+    this.setState({ array: [ ...this.state.array, elementNode ] });
+    wordOfArray.push (document.getElementById('listItem').value);
     flag.push (false);
-    document.getElementById ("listItem").value = '';
+    document.getElementById('listItem').value = '';
 
 
     axios.post('/addnote', {
@@ -76,17 +74,15 @@ export default class ToDo extends Component {
         console.log(error);
       });
 
-
-
     console.log(this.state.words);
     console.log(this.state.through);
 
   }
 
-  deleteNote(ourItem) {
-    this.setState ({...this.state.through.splice (ourItem, 1)});
-    this.setState ({...this.state.words.splice (ourItem, 1)});
-    this.setState ({...this.state.array.splice (ourItem, 1)});
+  deleteNote (ourItem) {
+    this.setState({ ...this.state.through.splice(ourItem, 1) });
+    this.setState({ ...this.state.words.splice(ourItem, 1) });
+    this.setState({ ...this.state.array.splice(ourItem, 1) });
 
     axios.post('/deletenote', {
       itemNumber: ourItem
@@ -98,12 +94,12 @@ export default class ToDo extends Component {
         console.log(error);
       });
 
-    console.log (this.state.words);
-    console.log (this.state.through);
+    console.log(this.state.words);
+    console.log(this.state.through);
   }
 
-  editNote(ourItem) {
-    this.setState ({...this.state.array.splice (ourItem, 1, <EditNote save={this.save}/>)});
+  editNote (ourItem) {
+    this.setState({...this.state.array.splice (ourItem, 1, <EditNote save={this.save}/>)});
 
     console.log(this.state.words);
     console.log(this.state.through);
@@ -113,12 +109,11 @@ export default class ToDo extends Component {
     let elementNote = <Note
       delete={this.deleteNote}
       edit={this.editNote}
-      value={document.getElementById ('editItem').value}
+      value={document.getElementById('editItem').value}
       through={this.state.through}
     />;
-    this.setState({...this.state.array.splice (ourItem, 1, elementNote)});
-    this.setState({...this.state.words.splice (ourItem, 1, document.getElementById('editItem').value)});
-
+    this.setState({ ...this.state.array.splice(ourItem, 1, elementNote) });
+    this.setState({ ...this.state.words.splice(ourItem, 1, document.getElementById('editItem').value) });
   }
 
   logOut () {
@@ -131,17 +126,14 @@ export default class ToDo extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
   }
-
-  render() {
-    const listItems = this.state.array.map ((item, index) => <li key={index} id={index}>{item}</li>);
-
+  render () {
+    const listItems = this.state.array.map((item, index) => <li key={index} id={index}>{item}</li>);
 
     return (
       <div>
         <div>
-          <input type="text" id="listItem"/>
+          <input type='text' id='listItem' />
           <button onClick={this.addNote}>Add Note</button>
         </div>
         <ul>
@@ -151,7 +143,6 @@ export default class ToDo extends Component {
           <button onClick={this.logOut}>Logout</button>
         </div>
       </div>
-    )
+    );
   }
-
 }

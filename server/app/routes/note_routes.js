@@ -30,11 +30,11 @@ module.exports = function (app, db) {
 
         user.save(function (err) {
             if (err) return console.log(err);
-            console.log("Сохранен объект", user);
+            //console.log("Сохранен объект", user);
         });
         note.save(function (err) {
             if (err) return console.log(err);
-            console.log("Сохранён объект", note);
+            //console.log("Сохранён объект", note);
 
         });
 
@@ -76,7 +76,7 @@ module.exports = function (app, db) {
             obj.note.isThrough.push(req.body.isThrough);
             obj.save(function (err) {
                 if (err) return console.log(err);
-                console.log("Сохранён объект", obj);
+                //console.log("Сохранён объект", obj);
                 res.send(obj.note);
             })
         })
@@ -87,7 +87,7 @@ module.exports = function (app, db) {
             obj.note.text.splice(req.body.itemNumber,1,req.body.text);
             obj.save(function (err) {
                 if (err) return console.log(err);
-                console.log("Сохранён объект", obj);
+                //console.log("Сохранён объект", obj);
                 res.send(obj.note);
             })
         })
@@ -110,7 +110,7 @@ module.exports = function (app, db) {
             obj.note.isThrough.splice(req.body.itemNumber,1);
             obj.save(function (err) {
                 if (err) return console.log(err);
-                console.log("Сохранён объект", obj);
+                //console.log("Сохранён объект", obj);
                 res.send(obj.note);
             })
         })
