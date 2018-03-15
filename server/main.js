@@ -5,6 +5,10 @@ const logger = require('../build/lib/logger')
 const webpackConfig = require('../build/webpack.config')
 const project = require('../project.config')
 const compress = require('compression')
+const mongoose       = require('mongoose');
+var cors             = require('cors');
+const mongoDB = 'mongodb://localhost/todo';
+const bodyParser     = require('body-parser');
 
 const app = express()
 app.use(compress())
@@ -14,6 +18,18 @@ app.use(compress())
 // ------------------------------------
 if (project.env === 'development') {
   const compiler = webpack(webpackConfig)
+
+  app.use(bodyParser());
+  app.use(cors());
+  require('./app/routes')(app, {});
+
+
+  mongoose.Promise = global.Promise;
+  mongoose.connect(mongoDB, function (err) {
+    if (err) throw err;
+    console.log('Successfully connected');
+  });
+
 
   logger.info('Enabling webpack development and HMR middleware')
   app.use(require('webpack-dev-middleware')(compiler, {
