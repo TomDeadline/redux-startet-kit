@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
-import axios from 'axios/index'
-
-
+import axios from 'axios/index';
 
 export default class EditNote extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
     this.state = {};
     this.handleSaveClick = this.handleSaveClick.bind(this);
   }
 
-  handleSaveClick(e) {
+  handleSaveClick (e) {
     const saveItem = e.target.closest('li').id;
     this.props.save(saveItem);
 
@@ -24,15 +22,16 @@ export default class EditNote extends Component {
       .catch(function (error) {
         console.log(error);
       });
+  };
 
-  }
-
-  render() {
+  render () {
     return (
-      <div className="ToDoList">
-        <input type="text" id="editItem"/>
-        <button onClick={this.handleSaveClick}>save</button>
+      <div className='input-group'>
+        <input type='text' className='form-control' id='editItem' />
+        <div className='input-group-btn'>
+          <button className='btn btn-success' onClick={this.handleSaveClick}>save</button>
+        </div>
       </div>
-    )
+    );
   }
 }

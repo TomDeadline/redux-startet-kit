@@ -29,8 +29,8 @@ if (__DEV__) {
     const renderError = (error) => {
       const RedBox = require('redbox-react').default
 
-      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
-    }
+      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE);
+    };
 
     render = () => {
       try {

@@ -1,5 +1,47 @@
-.duck {
-  display: block;
-  width: 120px;
-  margin: 1.5rem auto;
+
+.form-control {
 }
+
+.width-70 {
+  width: 70% !important;
+}
+
+.input-group {
+}
+
+.list-group-item {
+  display: inline-block;
+  width: 40%;
+  margin: 0px 30%;
+}
+
+.textBoroda {
+  position: absolute;
+  left: 10%;
+}
+
+
+.checkbox {
+  position: inherit;
+  float: left;
+}
+
+.edit {
+  position: inherit;
+  float: right;
+}
+
+.delete {
+
+  float: right;
+  display: none;
+}
+
+.list-group-item:hover {
+  .delete{
+
+
+    display: block;
+  }
+}
+

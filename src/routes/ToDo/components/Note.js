@@ -5,7 +5,7 @@ import axios from 'axios/index';
 class Note extends Component {
   constructor (props) {
     super(props);
-    this.state = { class: 'line-none' }
+    this.state = { class: 'line-none' };
     this.handleEditClick = this.handleEditClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleCheckboxClick = this.handleCheckboxClick.bind(this);
@@ -22,35 +22,32 @@ class Note extends Component {
   }
 
   handleCheckboxClick (e) {
-    if (this.state.class === 'line-none') {
-      this.setState({ class: 'line-through' });
-    }
-    if (this.state.class === 'line-through') {
-      this.setState( {class: 'line-none'} );
-    }
     const checkItem = e.target.closest('li').id;
-    this.setState( {...this.props.through.splice(checkItem, 1, !this.props.through[checkItem]) });
-    console.log(this.props.through);
-
     axios.post('/turncheck', {
       itemNumber: checkItem
     })
       .then((response) => {
-        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-
+    this.props.checkboxClick(checkItem);
+  }
+  prepareUranus () {
+    if (this.props.checkFlag.toString() === 'false') {
+      return <label className='list-group-item-text textBoroda'>{this.props.value}</label>;
+    } else {
+      return <del className='list-group-item-text line-through textBoroda'>{this.props.value}</del>;
+    }
   }
 
   render () {
     return (
-      <div className='ToDoList'>
-        <label id='textNode' className={this.state.class}>{this.props.value}</label>
-        <button onClick={this.handleEditClick}>edit</button>
-        <button onClick={this.handleDeleteClick}>delete</button>
-        <input onClick={this.handleCheckboxClick} type='checkbox' />
+      <div className='Note'>
+        {this.prepareUranus()}
+        <button className='btn btn-warning edit' onClick={this.handleEditClick}>edit</button>
+        <button className='btn btn-danger delete' onClick={this.handleDeleteClick}>X</button>
+        <input className='checkbox' onClick={this.handleCheckboxClick} type='checkbox' />
       </div>
     );
   }

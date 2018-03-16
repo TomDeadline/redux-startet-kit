@@ -3,10 +3,10 @@ import axios from 'axios';
 
 export default class registration extends Component {
   constructor (props) {
-    super(props)
+    super(props);
     this.handleRegClick = this.handleRegClick.bind(this)
 
-    console.log(props)
+    console.log(props);
   }
 
   handleRegClick () {
@@ -16,37 +16,27 @@ export default class registration extends Component {
       email: document.getElementById('regEmail').value
     })
       .then((response) => {
-        console.log(response)
-        this.props.router.push('/')
+        console.log(response);
+        this.props.router.push('/');
       })
       .catch(function (error) {
-        console.log(error)
-      })
+        console.log(error);
+      });
   }
 
   render () {
     return (
-      <div className="app">
-        <label>Enter e-mail: </label>
-        <input type="text" id="regEmail"/>
-        <br/>
-        <br/>
-        <label>Enter username: </label>
-        <input type="text" id="regUsername"/>
-        <br/>
-        <br/>
-        <label>Enter password: </label>
-        <input type="password" id="regPass"/>
-        <br/>
-        <br/>
-        <label>Repeat password: </label>
-        <input type="password" id="regPassConfirm"/>
-        <br/>
-        <br/>
-        <button onClick={this.handleRegClick}>Registration</button>
+      <div className='app'>
+        <input type='text' className='form-control' id='regEmail' placeholder='Email' />
+        <br />
+        <input type='text' className='form-control' id='regUsername' placeholder='Username' />
+        <br />
+        <input type='password' className='form-control' id='regPass' placeholder='Password' />
+        <br />
+        <input type='password' className='form-control' id='regPassConfirm' placeholder='Confirm password' />
+        <br />
+        <button className='btn btn-success' onClick={this.handleRegClick}>Registration</button>
       </div>
-    )
+    );
   }
 }
-
-
