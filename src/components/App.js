@@ -10,10 +10,11 @@ class App extends React.Component {
   }
 
   shouldComponentUpdate () {
-    return false
+    return false;
   }
 
   render () {
+
     return (
       <Provider store={this.props.store}>
         <div style={{ height: '100%' }}>
@@ -24,4 +25,4 @@ class App extends React.Component {
   }
 }
 
-export default App
+export default App;

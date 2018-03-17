@@ -41,78 +41,71 @@ module.exports = function (app, db) {
   app.post('/login',
     passport.authenticate('local'),
     (req, res) => {
-      //console.log(req.user)
       res.send('login')
     })
 
-  app.get('/todo', authenticationMiddleware(), (req, res) => {
-    // console.log( req.user)
+  app.get('/getToDo', authenticationMiddleware(), (req, res) => {
+    console.log( req.user );
     Note.findOne({username: req.user.username}, function (err, obj) {
-      console.log(req.user.username + ' have a ' + obj.note)
-
-      res.send(obj.note)
-    })
-  })
+      res.send(obj.note);
+    });
+  });
 
   function authenticationMiddleware () {
     return function (req, res, next) {
-      console.log(req.user, 'req.isAuthenticated()', req.isAuthenticated())
       if (req.isAuthenticated()) {
-        return next()
+        return next();
       }
-      res.redirect('/')
-    }
+      res.redirect('/');
+    };
   }
 
   app.post('/addnote', authenticationMiddleware(), (req, res) => {
     Note.findOne({username: req.user.username}, function (err, obj) {
-      obj.note.text.push(req.body.text)
-      obj.note.isThrough.push(req.body.isThrough)
+      obj.note.text.push(req.body.text);
+      obj.note.isThrough.push(req.body.isThrough);
       obj.save(function (err) {
-        if (err) return console.log(err)
-        //console.log("Сохранён объект", obj);
+        if (err) return console.log(err);
         res.send(obj.note)
-      })
-    })
-  })
+      });
+    });
+  });
 
   app.post('/editnote', authenticationMiddleware(), (req, res) => {
+
     Note.findOne({username: req.user.username}, function (err, obj) {
-      obj.note.text.splice(req.body.itemNumber, 1, req.body.text)
+      obj.note.text.splice(req.body.itemNumber, 1, req.body.text);
       obj.save(function (err) {
-        if (err) return console.log(err)
-        //console.log("Сохранён объект", obj);
-        res.send(obj.note)
-      })
-    })
-  })
+        if (err) return console.log(err);
+        res.send(obj.note);
+      });
+    });
+  });
 
   app.post('/turncheck', authenticationMiddleware(), (req, res) => {
     Note.findOne({username: req.user.username}, function (err, obj) {
       obj.note.isThrough.splice(req.body.itemNumber, 1, !obj.note.isThrough[req.body.itemNumber])
       obj.save(function (err) {
-        if (err) return console.log(err)
-        console.log('Сохранён объект', obj)
-        res.send(obj.note)
-      })
-    })
-  })
+        if (err) return console.log(err);
+        res.send(obj.note);
+      });
+    });
+  });
   app.post('/deletenote', authenticationMiddleware(), (req, res) => {
     Note.findOne({username: req.user.username}, function (err, obj) {
-      obj.note.text.splice(req.body.itemNumber, 1)
-      obj.note.isThrough.splice(req.body.itemNumber, 1)
+      obj.note.text.splice(req.body.itemNumber, 1);
+      obj.note.isThrough.splice(req.body.itemNumber, 1);
       obj.save(function (err) {
-        if (err) return console.log(err)
-        //console.log("Сохранён объект", obj);
-        res.send(obj.note)
-      })
-    })
-  })
+        if (err) return console.log(err);
+        res.send(obj.note);
+      });
+    });
+  });
 
   app.get('/logout', function (req, res) {
-    req.logout()
-    res.send('sdfsfgsg')
-  })
-}
+    req.logout();
+    res.send('sdfsfgsg');
+  });
+};
 
 

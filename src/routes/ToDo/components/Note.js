@@ -35,19 +35,26 @@ class Note extends Component {
   }
   prepareUranus () {
     if (this.props.checkFlag.toString() === 'false') {
-      return <label className='list-group-item-text textBoroda'>{this.props.value}</label>;
+      return <label className='list-group-item-text textBoroda' onDoubleClick={this.handleEditClick}>{this.props.value}</label>;
     } else {
-      return <del className='list-group-item-text line-through textBoroda'>{this.props.value}</del>;
+      return <del className='list-group-item-text line-through textBoroda' onDoubleClick={this.handleEditClick}>{this.props.value}</del>;
+    }
+  }
+  zalupa(){
+    if (this.props.checkFlag.toString() === 'false') {
+      return '';
+    } else {
+      return 'checked';
     }
   }
 
   render () {
     return (
-      <div className='Note'>
+      <div className='Note' >
         {this.prepareUranus()}
         <button className='btn btn-warning edit' onClick={this.handleEditClick}>edit</button>
         <button className='btn btn-danger delete' onClick={this.handleDeleteClick}>X</button>
-        <input className='checkbox' onClick={this.handleCheckboxClick} type='checkbox' />
+        <input checked={this.zalupa()} className='checkbox' onChange={this.handleCheckboxClick} type='checkbox' />
       </div>
     );
   }

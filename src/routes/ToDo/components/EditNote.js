@@ -6,10 +6,12 @@ export default class EditNote extends Component {
     super(props);
     this.state = {};
     this.handleSaveClick = this.handleSaveClick.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleSaveClick (e) {
     const saveItem = e.target.closest('li').id;
+    console.log(e);
     this.props.save(saveItem);
 
     axios.post('/editnote', {
@@ -24,12 +26,18 @@ export default class EditNote extends Component {
       });
   };
 
+  handleKeyPress (e) {
+    if (e.key === 'Enter') {
+      this.handleSaveClick(e);
+    }
+  }
+
   render () {
     return (
       <div className='input-group'>
-        <input type='text' className='form-control' id='editItem' />
+        <input type='text' autoFocus className='form-control' id='editItem' rows='1' defaultValue={this.props.boroda} onKeyPress={this.handleKeyPress} />
         <div className='input-group-btn'>
-          <button className='btn btn-success' onClick={this.handleSaveClick}>save</button>
+          <button className='btn btn-success save' onClick={this.handleSaveClick}>save</button>
         </div>
       </div>
     );

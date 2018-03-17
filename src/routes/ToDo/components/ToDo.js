@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Note from './Note';
 import EditNote from './EditNote';
 import axios from 'axios';
-import './ToDo.scss'
+import './ToDo.scss';
 
 export default class ToDo extends Component {
   constructor (props) {
@@ -16,8 +16,8 @@ export default class ToDo extends Component {
   }
 
   componentWillMount () {
-    console.log('8===э');
-    axios.get('/todo')
+    console.log('qwe');
+    axios.get('/getToDo')
       .then((response) => {
         let textArr = response.data.text;
         let throughArr = response.data.isThrough;
@@ -36,6 +36,9 @@ export default class ToDo extends Component {
           wordOfArray.push(textArr[i]);
           flag.push(throughArr[i]);
         }
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 
@@ -67,10 +70,6 @@ export default class ToDo extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-    console.log(this.state.words);
-    console.log(this.state.through);
-
   }
 
   deleteNote (ourItem) {
@@ -87,21 +86,19 @@ export default class ToDo extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-    console.log(this.state.words);
-    console.log(this.state.through);
   }
 
   editNote (ourItem) {
     this.setState({ ...this.state.array.splice (ourItem, 1, <EditNote
       boroda={this.state.words[ourItem]}
-      save={this.save} />) });
-
-    console.log(this.state.words);
-    console.log(this.state.through);
+      save={this.save}
+    />) });
+    if (document.querySelector('.save')) {
+      document.querySelector('.save').click();
+    }
   }
 
-  save(ourItem) {
+  save (ourItem) {
     let elementNote = <Note
       delete={this.deleteNote}
       edit={this.editNote}
@@ -127,18 +124,23 @@ export default class ToDo extends Component {
   }
 
   logOut () {
+
+    console.log(this.props);
     axios.get('/logout', {
     })
       .then((response) => {
         console.log(response);
-        this.props.router.push('/');
+
       })
       .catch(function (error) {
         console.log(error);
       });
+    this.props.router.push('/login');
+
   }
   render () {
-    const listItems = this.state.array.map((item, index) => <li className='list-group-item' key={index} id={index}>{item}</li>);
+    const listItems = this.state.array.map((item, index) => <li className='list-group-item' key={'list-' + index} onDoubleClick={() => this.editNote(index)} id={index}>{item}</li>);
+    console.log('RENDER');
     return (
       <div>
         <div className='list-group-item'>

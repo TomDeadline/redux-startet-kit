@@ -14,7 +14,7 @@ export const createRoutes = (store) => ({
   component   : CoreLayout,
   indexRoute  : login,
   childRoutes : [
-    CounterRoute(store), { path: 'ToDo', indexRoute:ToDo },{ path: 'login', indexRoute:login }, { path: 'registration', indexRoute:registration}
+    CounterRoute(store), { path: 'ToDo', indexRoute: ToDo },{ path: 'login', indexRoute:login }, { path: 'registration', indexRoute:registration }
   ]
 })
 
@@ -36,4 +36,4 @@ export const createRoutes = (store) => ({
     when the route exists and matches.
 */
 
-export default createRoutes
+export default createRoutes;
