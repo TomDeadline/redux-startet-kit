@@ -35,7 +35,7 @@ export default class EditNote extends Component {
   render () {
     return (
       <div className='input-group'>
-        <input type='text' autoFocus className='form-control' id='editItem' rows='1' defaultValue={this.props.boroda} onKeyPress={this.handleKeyPress} />
+        <input type='text' autoFocus className='form-control margin-zero' id='editItem' rows='1' defaultValue={this.props.boroda} onKeyPress={this.handleKeyPress} />
         <div className='input-group-btn'>
           <button className='btn btn-success save' onClick={this.handleSaveClick}>save</button>
         </div>

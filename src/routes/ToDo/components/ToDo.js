@@ -7,7 +7,7 @@ import './ToDo.scss';
 export default class ToDo extends Component {
   constructor (props) {
     super(props);
-    this.state = {array: [], words: [], through: []};
+    this.state = { array: [], words: [], through: [] };
     this.addNote = this.addNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
     this.editNote = this.editNote.bind(this);
@@ -16,7 +16,6 @@ export default class ToDo extends Component {
   }
 
   componentWillMount () {
-    console.log('qwe');
     axios.get('/getToDo')
       .then((response) => {
         let textArr = response.data.text;
@@ -58,7 +57,6 @@ export default class ToDo extends Component {
     wordOfArray.push (document.getElementById('listItem').value);
     flag.push (false);
     document.getElementById('listItem').value = '';
-
 
     axios.post('/addnote', {
       text: this.state.words[this.state.words.length - 1],
@@ -124,23 +122,18 @@ export default class ToDo extends Component {
   }
 
   logOut () {
-
-    console.log(this.props);
     axios.get('/logout', {
     })
       .then((response) => {
         console.log(response);
-
       })
       .catch(function (error) {
         console.log(error);
       });
     this.props.router.push('/login');
-
   }
   render () {
     const listItems = this.state.array.map((item, index) => <li className='list-group-item' key={'list-' + index} onDoubleClick={() => this.editNote(index)} id={index}>{item}</li>);
-    console.log('RENDER');
     return (
       <div>
         <div className='list-group-item'>

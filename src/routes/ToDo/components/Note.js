@@ -33,14 +33,14 @@ class Note extends Component {
       });
     this.props.checkboxClick(checkItem);
   }
-  prepareUranus () {
+  selectString () {
     if (this.props.checkFlag.toString() === 'false') {
       return <label className='list-group-item-text textBoroda' onDoubleClick={this.handleEditClick}>{this.props.value}</label>;
     } else {
       return <del className='list-group-item-text line-through textBoroda' onDoubleClick={this.handleEditClick}>{this.props.value}</del>;
     }
   }
-  zalupa(){
+  checkboxClass () {
     if (this.props.checkFlag.toString() === 'false') {
       return '';
     } else {
@@ -51,10 +51,10 @@ class Note extends Component {
   render () {
     return (
       <div className='Note' >
-        {this.prepareUranus()}
+        {this.selectString()}
         <button className='btn btn-warning edit' onClick={this.handleEditClick}>edit</button>
         <button className='btn btn-danger delete' onClick={this.handleDeleteClick}>X</button>
-        <input checked={this.zalupa()} className='checkbox' onChange={this.handleCheckboxClick} type='checkbox' />
+        <input checked={this.checkboxClass()} className='checkbox' onChange={this.handleCheckboxClick} type='checkbox' />
       </div>
     );
   }

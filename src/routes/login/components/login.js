@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import './login.scss'
+import './login.scss';
 
 export default class login extends Component {
   constructor (props) {
     super (props);
     this.handleSignInClick = this.handleSignInClick.bind(this);
     this.handleRegClick = this.handleRegClick.bind(this);
-    console.log(props);
   }
 
   handleSignInClick () {
